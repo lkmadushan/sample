@@ -1,0 +1,29 @@
+version: '2'
+services:
+  app:
+    image: lkmadushan/nginx-php-alpine
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 80:80
+    networks:
+      - appnet
+  mysql:
+    image: mariadb:latest
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=homestead
+      - MYSQL_USER=homestead
+      - MYSQL_PASSWORD=secret
+    volumes:
+      - mysqldata:/var/lib/mysql
+    networks:
+      - appnet
+networks:
+  appnet:
+    driver: "bridge"
+volumes:
+  mysqldata:
+    driver: "local"
